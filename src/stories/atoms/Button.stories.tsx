@@ -3,8 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { IoSearchOutline } from "react-icons/io5";
 
 import { Button } from '@/components/ui/button';
+import { ComponentProps } from 'react';
 
-const meta: Meta<typeof Button> = {
+type CustomArgs = {
+  icon: React.ReactNode;
+}
+
+type ButtonWithCustomArgs = ComponentProps<typeof Button> & CustomArgs; 
+
+const meta: Meta<ButtonWithCustomArgs> = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
@@ -41,7 +48,7 @@ const meta: Meta<typeof Button> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<ButtonWithCustomArgs>;
 
 
 export const Default: Story = {
