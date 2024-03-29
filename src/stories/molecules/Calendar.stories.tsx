@@ -1,26 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Calendar } from '@/components/ui/calendar';
-import { useState } from 'react';
-import { DateRange } from "react-day-picker"
-
+import { Calendar } from "@/components/ui/calendar";
+import { useState } from "react";
+import { DateRange } from "react-day-picker";
 
 const meta: Meta<typeof Calendar> = {
   component: Calendar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    showOutsideDays: { control: { type: 'boolean' } },
-    pagedNavigation: { control: { type: 'boolean' } },
-    numberOfMonths: { control: { type: 'number' } },
-    fixedWeeks: { control: { type: 'boolean' } },
-    ISOWeek: { control: { type: 'boolean' } },
-    defaultMonth: { control: { type: 'date' } },
-    disableNavigation: { control: { type: 'boolean' } },
-    disabled: { control: { type: 'boolean' } },
+    showOutsideDays: { control: { type: "boolean" } },
+    pagedNavigation: { control: { type: "boolean" } },
+    numberOfMonths: { control: { type: "number" } },
+    fixedWeeks: { control: { type: "boolean" } },
+    ISOWeek: { control: { type: "boolean" } },
+    defaultMonth: { control: { type: "date" } },
+    disableNavigation: { control: { type: "boolean" } },
+    disabled: { control: { type: "boolean" } },
   },
   decorators: [
     (Story) => (
-      <div className='flex justify-center items-center'>
+      <div className="flex justify-center items-center">
         <Story />
       </div>
     ),
@@ -42,18 +41,18 @@ export const SingleMode: Story = {
     disabled: false,
   },
   render: (args) => {
-    const [date, setDate] = useState<Date | undefined>(new Date())
+    const [date, setDate] = useState<Date | undefined>(new Date());
 
     return (
       <Calendar
         {...args}
-        mode='single'
+        mode="single"
         selected={date}
         onSelect={setDate}
         className="rounded-md border"
       />
-    )
-  }
+    );
+  },
 };
 
 export const MultipleMode: Story = {
@@ -74,13 +73,13 @@ export const MultipleMode: Story = {
     return (
       <Calendar
         {...args}
-        mode='multiple'
+        mode="multiple"
         selected={days}
         onSelect={setDays}
         className="rounded-md border"
       />
-    )
-  }
+    );
+  },
 };
 
 export const RageMode: Story = {
@@ -100,11 +99,11 @@ export const RageMode: Story = {
     return (
       <Calendar
         {...args}
-        mode='range'
+        mode="range"
         selected={range}
         onSelect={setRange}
         className="rounded-md border"
       />
-    )
-  }
+    );
+  },
 };
