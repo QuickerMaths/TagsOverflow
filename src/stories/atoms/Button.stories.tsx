@@ -13,6 +13,7 @@ type ButtonWithCustomArgs = ComponentProps<typeof Button> & CustomArgs;
 
 const meta: Meta<ButtonWithCustomArgs> = {
   component: Button,
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       options: [
