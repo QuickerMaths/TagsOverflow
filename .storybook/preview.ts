@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "../src/css/globals.css";
 
-import { withThemeByClassName, withThemeByDataAttribute } from "@storybook/addon-themes";
+import { withThemeByDataAttribute } from "@storybook/addon-themes";
 
 const preview: Preview = {
   parameters: {
@@ -13,7 +13,7 @@ const preview: Preview = {
     },
   },
 
-  decorators: [ withThemeByDataAttribute({
+  decorators: [withThemeByDataAttribute({
     themes: {
       light: "light",
       dark: "dark",
