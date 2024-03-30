@@ -10,15 +10,25 @@ module.exports = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
-  theme: {
+  theme: {  
+    screens: {
+      'sm': '480px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1440px',
+    },
     container: {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1440px",
       },
     },
     extend: {
+      height: {
+        "withoutHeader": "calc(100vh - 64px)",
+      },
       fontFamily: {
         'sans': ['Montserrat', ...defaultTheme.fontFamily.sans],
       },
