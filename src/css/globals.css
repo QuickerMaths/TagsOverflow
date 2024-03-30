@@ -75,7 +75,44 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .h1-variant {
+    @apply font-extrabold text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wider
+  }
+
+  .h2-variant {
+    @apply font-bold text-lg sm:text-2xl md:text-3xl lg:text-4xl
+  }
+
+  .h3-variant {
+    @apply font-semibold sm:text-xl md:text-2xl lg:text-3xl 
+  }
+
+  .h4-variant {
+    @apply font-medium text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground
+  }
+
+  .p-variant {
+    @apply font-light text-sm sm:text-base md:text-lg lg:text-xl 
+  }
+
+  .span-variant {
+    @apply font-light text-xs sm:text-sm md:text-base lg:text-lg text-accent-foreground
   }
 }
