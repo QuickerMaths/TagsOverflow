@@ -30,9 +30,6 @@ const meta: Meta<ToastWithCustomArgs> = {
         </>
       ) 
     },
-    query: {
-      raz: "toast",
-    }
   },
   argTypes: {
     children: { table: { disable: true } },

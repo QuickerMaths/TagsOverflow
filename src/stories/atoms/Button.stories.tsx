@@ -36,7 +36,7 @@ const meta: Meta<ButtonWithCustomArgs> = {
       if: { arg: "size", neq: "icon" },
     },
     icon: {
-      control: { type: "text" },
+      control: { type: "disabled" },
     },
     disabled: { control: { type: "boolean" } },
     asChild: {
