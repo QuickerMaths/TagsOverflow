@@ -1,12 +1,13 @@
 import Container from '@/components/container'
+import Form from '@/components/form'
 
 const Tags = () => {
   return (
     <main>
       <Container>
-        <div className='w-full border border-white'>Tags</div>
+        <Form />
       </Container>
-    </main>
+    </main> 
   )
 }
 
