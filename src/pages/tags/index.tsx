@@ -1,11 +1,14 @@
 import Container from '@/components/container'
 import Form from '@/components/form'
+import TagsProvider from '@/context/tags-context'
 
 const Tags = () => {
   return (
     <main>
       <Container>
-        <Form />
+        <TagsProvider>
+          <Form />
+        </TagsProvider>
       </Container>
     </main> 
   )
