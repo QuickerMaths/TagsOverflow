@@ -1,12 +1,21 @@
-import axios from "axios"
+import { QueryClient } from "@tanstack/query-core"
+import axios from 'axios'
 
-export const tagsLoader = async () => {
-    const data = await axios(
-        'https://api.stackexchange.com/2.3/tags?&page=1&pagesize=50&order=desc&sort=popular&site=stackoverflow&include=tag.last_activity_date', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-    
-    return data
-}
+const API_URL = 'https://api.stackexchange.com/2.3/tags?include=tag.last_activity_date;.total'
+
+export const tagsQueryOptions = {
+    queryKey: ['tags'],
+    queryFn: () => axios(`${API_URL}&page=1&pagesize=50&order=desc&sort=popular&site=stackoverflow`)
+  }
+
+export const tagsLoader = 
+    (queryClient: QueryClient) => 
+    async () => {
+        try{
+            await queryClient.prefetchQuery(tagsQueryOptions)
+        } catch(err) {
+            console.log(err)
+        }
+
+        return queryClient.getQueryData(tagsQueryOptions.queryKey)
+    }
