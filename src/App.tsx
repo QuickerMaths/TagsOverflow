@@ -1,16 +1,31 @@
-import { Route, Routes } from "react-router"
-import Tags from "./pages/tags"
-import Layout from "./components/layout"
-import NotFound from "./pages/not-found"
+import { tagsLoader } from "./services/tagsLoader"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { lazy, Suspense } from "react"
+import HeaderSkeleton from "./components/header-skeleton"
 
-function App() {
+const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: lazy(() => import('./components/layout/index')),
+    children: [{
+        index: true,
+        path: '/',
+        loader: tagsLoader, 
+        errorElement: <div>Failed to load tags</div>,
+        Component: lazy(() => import('./pages/tags/index')),
+    },
+    {
+        path: '*',
+        Component: lazy(() => import('./pages/not-found/index'))
+    }]
+  }
+])
+
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Tags />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<HeaderSkeleton />}>
+        <RouterProvider router={router} />
+    </Suspense>
   )
 }
 
