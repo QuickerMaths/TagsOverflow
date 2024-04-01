@@ -1,18 +1,15 @@
-import { formSchema } from "@/components/form";
-import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
-import { z } from 'zod'
+import { createContext, useContext, useMemo, useReducer } from "react";
+import { FormType } from "@/components/form";
 
-type State = z.infer<typeof formSchema>
+type Actions = { type: 'SET_FROM_STATE', payload: FormType }
 
-type Actions = { type: 'SET_FROM_STATE', payload: State }
-
-const reducer = (state: State, action: Actions) => {
+const reducer = (state: FormType, action: Actions) => {
     switch(action.type){
         case 'SET_FROM_STATE':
             return {
-								...state,
-								...action.payload
-						}
+	    		...state,
+	    		...action.payload
+			}
         default:
             return state
     }
@@ -20,8 +17,9 @@ const reducer = (state: State, action: Actions) => {
 
 export type TagsContextType = {
 	tagsContextApi: {
-        setFromState: (payload: State) => void
-    }
+        setFromState: (payload: FormType) => void
+    }, 
+    state: FormType
 }
 
 const TagsContext = createContext<TagsContextType | undefined>(undefined)
@@ -32,33 +30,27 @@ interface TagsProviderProps {
 
 const TagsProvider = ({ children }: TagsProviderProps) => {
     const [state, dispatch] = useReducer(reducer, {
-				search: "",
-				order: 'asc',
-				tagsPerPage: 15,
+				inname: "",
+				order: 'desc',
+				pagesize: 50,
 				date: {
-						fromDate: undefined,
-						toDate: undefined
+					fromdate: undefined,
+					todate: undefined
 				}
-		} as State);
+		} as FormType);
 
     const tagsContextApi = useMemo(() => {
-        const setFromState = (payload: State) => {
+        const setFromState = (payload: FormType) => {
             dispatch({ type: 'SET_FROM_STATE', payload })
         }
 
         return { setFromState }
     }, [])
-   
-
-
-    // useEffect(() => {
-    //     console.log(state)
-    // }, [state])
 
     return (
-				<TagsContext.Provider value={{ tagsContextApi }}>
-						{children}
-				</TagsContext.Provider>
+			<TagsContext.Provider value={{ tagsContextApi, state }}>
+				{children}
+			</TagsContext.Provider>
 		)
 }
 

@@ -21,8 +21,8 @@ interface DatePickerProps {
 const DatePicker = ({ field: { onChange, value} }: DatePickerProps) => {
     const handleSelect = (date: DateRange | undefined) => {
         onChange({
-            fromDate: date?.from,
-            toDate: date?.to,
+            fromdate: date?.from,
+            todate: date?.to,
         })
     }
 
@@ -34,13 +34,13 @@ const DatePicker = ({ field: { onChange, value} }: DatePickerProps) => {
               variant={"outline"}
               className={cn(
                 "w-full pl-3 text-left font-normal truncate",
-                !value?.fromDate && !value?.toDate && "text-muted-foreground"
+                !value?.fromdate && !value?.todate && "text-muted-foreground"
               )}
             >
-              {value?.fromDate && value?.toDate ? (
+              {value?.fromdate && value?.todate ? (
                 <>
-                  {format(value?.fromDate, "P")} -{" "}
-                  {format(value?.toDate, "P")}
+                  {format(value?.fromdate, "P")} -{" "}
+                  {format(value?.todate, "P")}
                 </>
               ) : (
                 <span>Pick a date</span>
@@ -56,8 +56,8 @@ const DatePicker = ({ field: { onChange, value} }: DatePickerProps) => {
             }
             mode="range"
             selected={{
-                from: value?.fromDate,
-                to: value?.toDate,
+                from: value?.fromdate,
+                to: value?.todate,
             }}
             onSelect={handleSelect}
           />

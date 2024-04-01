@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { UseFormReturn, useForm } from "react-hook-form"
+import { UseFormReturn, useForm, useWatch } from "react-hook-form"
 import { z } from "zod"
 import {
   Form as FormUI,
@@ -38,21 +38,21 @@ import Typography from "../typography"
 import { cn } from "@/utils/cn"
 
 export const formSchema = z.object({
-  search: z.string(),
+  inname: z.string(),
   order: z.enum(["asc", "desc"]), 
-  tagsPerPage: z
+  pagesize: z
     .coerce  
     .number()
     .int()
     .min(1, {
       message: "Tags per page must be at least 1",
     })
-    .max(25, {
-      message: "Tags per page must not be greater than 25",
+    .max(100, {
+      message: "Tags per page must not be greater than 100",
     }),
   date: z.object({
-    fromDate: z.date().optional(),
-    toDate: z.date().optional(),
+    fromdate: z.date().optional(),
+    todate: z.date().optional(),
   }),
   sort: z.enum(['popular', 'activity', 'name']),
   minMax: z
@@ -70,14 +70,16 @@ export const formSchema = z.object({
     }),
 })
 
+export type FormType = z.infer<typeof formSchema>
+
 const defaultFormValues = {
-  search: "",
-  order: 'asc' as const,
-  tagsPerPage: 25,
+  inname: "",
+  order: 'desc' as const,
+  pagesize: 50,
   sort: 'popular' as const,
   date: {
-    fromDate: undefined,
-    toDate: undefined,
+    fromdate: undefined,
+    todate: undefined,
   },
   minMax: {
     min: 0,
@@ -87,20 +89,12 @@ const defaultFormValues = {
 
 const Form = () => {
   const { tagsContextApi } = useTagsProvider()
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultFormValues,
   })
 
-  useEffect(() => {
-    const subscription = form.watch((value, { name, type }) =>
-      console.log(value, name, type)
-    )
-    
-    return () => subscription.unsubscribe()
-  }, [form.watch])
- 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FormType) {
     tagsContextApi.setFromState(values)
   }
 
@@ -124,7 +118,7 @@ const Form = () => {
 }
 
 interface FormProps {
-  form: UseFormReturn<z.infer<typeof formSchema>>
+  form: UseFormReturn<FormType>
   className?: string
 }
 
@@ -132,7 +126,7 @@ const SearchInput = ({ form, className }: FormProps) => {
   return (
     <FormField
       control={form.control}
-      name="search"
+      name="inname"
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel className="sr-only">Search Tags</FormLabel>
@@ -182,7 +176,7 @@ const TagsPerPageInput = ({ form, className }: FormProps) => {
   return (
     <FormField
       control={form.control}
-      name="tagsPerPage"
+      name="pagesize"
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel className="sr-only">Tags per page</FormLabel>
@@ -300,6 +294,14 @@ const RadioGroupFormItem = ({ value }: RadioGroupFormItemProps) => {
 }
 
 const MinMax = ({ form, className }: FormProps) => {
+  const sort = useWatch({ control: form.control, name: 'sort' })
+
+  useEffect(() => {
+    if (sort !== 'popular') {
+      form.resetField('minMax')
+    }
+  }, [sort])
+
   return (
     <div className={cn('grid grid-cols-6 grid-rows-7 gap-x-2', className)}>
       <FormField
