@@ -1,6 +1,9 @@
 import { useLoaderData } from "react-router"
 import Tag from "../tag"
 import { z } from 'zod'
+import { useQuery } from "@tanstack/react-query"
+import { tagsQueryOptions } from "@/services/tagsLoader"
+import TagsListSkeleton from "../tag-list-skeleton"
 
 const TagSchema = z.object({
   count: z.number(),
@@ -15,18 +18,34 @@ const TagSchema = z.object({
 export type TagType = z.infer<typeof TagSchema>
 
 const TagsSchema = z.object({
-  items: z.array(TagSchema)
+  has_more: z.boolean(),
+  items: z.array(TagSchema),
+  quota_max: z.number(),
+  quota_remaining: z.number(),
+  error_message: z.string().optional(),
+  error_name: z.string().optional(),
+  error_id: z.number().optional(),
+  total: z.number().optional()
 })
 
-
 const TagsList = () => {
-  const data = useLoaderData() as { data: unknown }
+  const initialTags = useLoaderData() as { data: unknown }
 
-  const tags = TagsSchema.parse(data.data)
+  const { data, isFetching } = useQuery({
+    ...tagsQueryOptions,
+    initialData: initialTags
+  })
+
+  if(isFetching) {
+    return <TagsListSkeleton />
+  }
+ 
+
+  const safeTags = TagsSchema.parse(data.data)
 
   return (  
     <ul className="mt-5 grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-      {tags.items.map((tag: TagType) => (
+      {safeTags.items.map((tag: TagType) => (
         <Tag key={tag.name} tag={tag} />
       ))}
     </ul>
