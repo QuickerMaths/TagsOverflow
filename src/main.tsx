@@ -11,6 +11,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { tagsLoader } from './services/tagsLoader.ts'
+import RouterError from './components/router-error/index.tsx'
 
 const queryClient = new QueryClient()
 
@@ -20,10 +21,9 @@ const router = createBrowserRouter([
     Component: lazy(() => import('./components/layout/index')),
     children: [{
         index: true,
-        path: '/',
         loader: tagsLoader(queryClient),
-        errorElement: <div>Failed to load tags</div>,
-        Component: lazy(() => import('./pages/tags/index')),
+        ErrorBoundary: () => (<RouterError />),
+        Component: lazy(() => import('./pages/tags/index'))
     },
     {
         path: '*',
