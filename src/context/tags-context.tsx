@@ -5,7 +5,9 @@ import { tagsQueryOptions } from "@/services/tagsLoader";
 import useTagsUrl from "@/hooks/useTagsUrl";
 import axios from "axios";
 
-type Actions = { type: 'SET_FROM_STATE', payload: FormType }
+type Actions = 
+| { type: 'SET_FROM_STATE', payload: FormType }
+| { type: 'SET_PAGE', payload: number }
 
 const reducer = (state: FormType, action: Actions) => {
     switch(action.type){
@@ -14,6 +16,11 @@ const reducer = (state: FormType, action: Actions) => {
 	    		...state,
 	    		...action.payload
 			}
+        case 'SET_PAGE':
+            return {
+                ...state,
+                page: action.payload
+            }
         default:
             return state
     }
@@ -22,6 +29,7 @@ const reducer = (state: FormType, action: Actions) => {
 export type TagsContextType = {
 	tagsContextApi: {
         setFromState: (payload: FormType) => void
+        setPage: (payload: number) => void
     }, 
     state: FormType
 }
@@ -35,6 +43,7 @@ interface TagsProviderProps {
 const TagsProvider = ({ children }: TagsProviderProps) => {
     const queryClient = useQueryClient()
     const [state, dispatch] = useReducer(reducer, {
+        page: 1,
 		inname: "",
 		order: 'desc',
 		pagesize: 50,
@@ -49,7 +58,11 @@ const TagsProvider = ({ children }: TagsProviderProps) => {
             dispatch({ type: 'SET_FROM_STATE', payload })
         }
 
-        return { setFromState }
+        const setPage = (payload: number) => {
+            dispatch({ type: 'SET_PAGE', payload })
+        }
+
+        return { setFromState, setPage }
     }, [])
 
     useEffect(() => {
@@ -57,7 +70,6 @@ const TagsProvider = ({ children }: TagsProviderProps) => {
             queryKey: tagsQueryOptions.queryKey, 
             queryFn: () => axios(useTagsUrl({ formState: state }))
         })
-
     }, [state])
 
     return (

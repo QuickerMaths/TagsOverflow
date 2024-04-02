@@ -38,6 +38,7 @@ import Typography from "../typography"
 import { cn } from "@/utils/cn"
 
 export const formSchema = z.object({
+  page: z.coerce.number(),
   inname: z.string(),
   order: z.enum(["asc", "desc"]), 
   pagesize: z
@@ -73,6 +74,7 @@ export const formSchema = z.object({
 export type FormType = z.infer<typeof formSchema>
 
 const defaultFormValues = {
+  page: 1,
   inname: "",
   order: 'desc' as const,
   pagesize: 50,

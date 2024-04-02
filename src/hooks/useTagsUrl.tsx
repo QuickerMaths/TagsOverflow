@@ -8,7 +8,7 @@ interface TagsQueryParams {
 const API_URL = 'https://api.stackexchange.com'
 
 const useTagsUrl = ({ formState }: TagsQueryParams) => {
-    const { inname, order, pagesize, date, minMax, sort } = formState
+    const { inname, order, pagesize, date, minMax, sort, page } = formState
     const { fromdate, todate } = date
 
     const fromDate = fromdate ? Math.floor(fromdate.getTime()/1000) : undefined
@@ -16,7 +16,7 @@ const useTagsUrl = ({ formState }: TagsQueryParams) => {
     const min = minMax?.min || undefined
     const max = minMax?.max || undefined
 
-    const url = new URL(`${API_URL}/2.3/tags?page=1`)
+    const url = new URL(`${API_URL}/2.3/tags?include=tag.last_activity_date;.total`)
 
     const setParam = (key: string, value: string | number | undefined) => {
         if (value !== undefined) {
@@ -24,6 +24,7 @@ const useTagsUrl = ({ formState }: TagsQueryParams) => {
         }
     }
 
+    setParam('page', page)
     setParam('pagesize', pagesize)
     setParam('order', order)
     setParam('sort', sort)
