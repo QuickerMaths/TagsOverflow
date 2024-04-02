@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router"
 import Tag from "../tag"
 import { z } from 'zod'
-import { useQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { tagsQueryOptions } from "@/services/tagsLoader"
 import TagsListSkeleton from "../tag-list-skeleton"
 import { stagger, useAnimate } from "framer-motion"
@@ -33,12 +33,17 @@ const TagsSchema = z.object({
 
 const TagsList = () => {
   const [scope, animate] = useAnimate()
+
   const initialTags = useLoaderData() as { data: unknown }
   
-  const { data, isFetching } = useQuery({
+  const { data, error, isFetching } = useSuspenseQuery({
     ...tagsQueryOptions,
     initialData: initialTags
   })
+
+  if(error) {
+    throw error
+  }
 
   useEffect(() => {
     if(scope.current === null) return
