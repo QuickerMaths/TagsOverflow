@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { FormType } from "@/components/form";
 import { useQueryClient } from "@tanstack/react-query";
-import { tagsQueryOptions } from "@/services/tagsLoader";
 import useTagsUrl from "@/hooks/useTagsUrl";
 import axios from "axios";
+import { tagsQueryOptions } from "@/services/tagsLoader";
 
 type Actions = 
 | { type: 'SET_FROM_STATE', payload: FormType }
@@ -67,7 +67,7 @@ const TagsProvider = ({ children }: TagsProviderProps) => {
 
     useEffect(() => {
         queryClient.fetchQuery({
-            queryKey: tagsQueryOptions.queryKey, 
+            ...tagsQueryOptions,
             queryFn: () => axios(useTagsUrl({ formState: state }))
         })
     }, [state])
