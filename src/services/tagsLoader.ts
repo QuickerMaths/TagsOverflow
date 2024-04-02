@@ -11,11 +11,7 @@ export const tagsQueryOptions = {
 export const tagsLoader = 
     (queryClient: QueryClient) => 
     async () => {
-        try{
-            await queryClient.prefetchQuery(tagsQueryOptions)
-        } catch(err) {
-            console.log(err)
-        }
+        await queryClient.prefetchQuery(tagsQueryOptions)
 
         return queryClient.getQueryData(tagsQueryOptions.queryKey)
     }
