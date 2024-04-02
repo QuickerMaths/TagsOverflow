@@ -7,7 +7,10 @@ interface TagProps {
 
 const Tag = ({ tag }: TagProps) => {
   return (
-    <li className='border border-ring bg-accent w-full px-3 py-5 rounded-lg grid grid-cols-6 grid-row-3 place-items-stretch'>
+    <li
+      className='border border-ring bg-accent w-full px-3 py-5 rounded-lg overflow-hidden'
+    > 
+      <div className='grid grid-cols-6 grid-row-3 place-items-stretch'>
         <Typography variant='h3' tag='h2' className='text-xl mb-2 col-start-1 col-end-6 row-start-1 row-end-1'>
           {tag.name}
         </Typography>
@@ -25,6 +28,7 @@ const Tag = ({ tag }: TagProps) => {
               </Typography>
           </Typography>
         )}
+      </div>
     </li>
   )
 }
