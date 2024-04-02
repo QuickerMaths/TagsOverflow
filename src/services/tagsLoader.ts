@@ -6,7 +6,8 @@ const API_URL = 'https://api.stackexchange.com/2.3/tags?include=tag.last_activit
 export const tagsQueryOptions = {
     queryKey: ['tags'],
     queryFn: () => axios(`${API_URL}&page=1&pagesize=50&order=desc&sort=popular&site=stackoverflow`),
-    keepPreviousData : true
+    keepPreviousData : true,
+    throwOneError: true
   }
 
 
