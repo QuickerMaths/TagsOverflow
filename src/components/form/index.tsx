@@ -183,7 +183,7 @@ const TagsPerPageInput = ({ form, className }: FormProps) => {
         <FormItem className={className}>
           <FormLabel className="sr-only">Tags per page</FormLabel>
           <FormControl>
-            <Input placeholder="Tags per page..." onChange={_.debounce(field.onChange, 500)} />
+            <Input type="number" placeholder="Tags per page..." onChange={_.debounce(field.onChange, 500)} />
           </FormControl>
           <FormDescription className="sr-only">
             This is a input filed for amount of tags displayed per page.
