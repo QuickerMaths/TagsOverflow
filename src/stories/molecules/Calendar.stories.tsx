@@ -17,13 +17,9 @@ const meta: Meta<typeof Calendar> = {
     disableNavigation: { control: { type: "boolean" } },
     disabled: { control: { type: "boolean" } },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    layout: "centered",
+  }
 };
 
 export default meta;
@@ -44,13 +40,13 @@ export const SingleMode: Story = {
     const [date, setDate] = useState<Date | undefined>(new Date());
 
     return (
-      <Calendar
-        {...args}
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md border"
-      />
+        <Calendar
+          {...args}
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          className="rounded-md border"
+        />
     );
   },
 };
