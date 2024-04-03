@@ -155,7 +155,7 @@ const OrderSelect = ({ form, className }: FormProps) => {
           <FormLabel className="sr-only">Order</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger aria-label={field.value}>
                 <SelectValue placeholder="Order by..." />
               </SelectTrigger>
             </FormControl>
@@ -286,7 +286,7 @@ const RadioGroupFormItem = ({ value }: RadioGroupFormItemProps) => {
   return (
     <FormItem className="flex-center gap-x-2 space-y-0">
       <FormControl>
-        <RadioGroupItem value={value} />
+        <RadioGroupItem aria-label={value} value={value} />
       </FormControl>
       <FormLabel className="font-normal capitalize">
         {value}
