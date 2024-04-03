@@ -37,13 +37,6 @@ const meta: Meta<DropdownMenuWithCustomArgs> = {
       options: ["start", "end", "center"],
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
