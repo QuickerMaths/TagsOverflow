@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import Tag from '@/components/tag';
 import Typography from '@/components/typography';
-import { TagType } from '@/components/tags-list';
+import { TagType } from '@/hoc/withQueryData'
 import { FunctionComponent } from 'react';
 
 type TagProps = {
