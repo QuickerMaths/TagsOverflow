@@ -45,13 +45,6 @@ const meta: Meta<ButtonWithCustomArgs> = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
@@ -74,5 +67,5 @@ export const WithIcon: Story = {
     icon: <IoSearchOutline />,
     disabled: false,
   },
-  render: (args) => <Button {...args}>{args.icon}</Button>,
+  render: (args) => <Button {...args} aria-label="button-with-icon">{args.icon}</Button>,
 };
