@@ -2,7 +2,6 @@ import Container from '@/components/container'
 import FormSkeleton from '@/components/form-skeleton'
 import Typography from '@/components/typography'
 import { Suspense, lazy } from 'react'
-import TagsListSkeleton from '@/components/tag-list-skeleton'
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 import QueryError from '@/components/query-error'
@@ -26,9 +25,7 @@ const Tags = () => {
               )}
               onReset={reset}
             >
-            <Suspense fallback={<TagsListSkeleton />}>
               <TagsList />
-            </Suspense>
            </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
