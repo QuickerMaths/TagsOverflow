@@ -11,7 +11,7 @@ import {
   DrawerOverlay,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { ComponentProps } from "react";
+import { ComponentProps, FunctionComponent } from "react";
 import { Button } from "@/components/ui/button";
 
 type CustomArgs = {
@@ -26,6 +26,9 @@ type DrawerWithCustomArgs = ComponentProps<typeof Drawer> & CustomArgs;
 
 const meta: Meta<DrawerWithCustomArgs> = {
   component: Drawer,
+  subcomponents: {
+    Button: Button as FunctionComponent<unknown>
+  },
   tags: ["autodocs"],
   argTypes: {
     triggerChildren: { control: { type: "text" } },
@@ -35,13 +38,6 @@ const meta: Meta<DrawerWithCustomArgs> = {
     shouldScaleBackground: { control: { type: "boolean" } },
     withOverlay: { control: { type: "boolean" } },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
@@ -109,7 +105,7 @@ export const WithButton: Story = {
           <DrawerDescription>{drawerDescriptionChildren}</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <button>Submit</button>
+          <Button>Submit</Button>
           <DrawerClose>{drawerCloseChildren}</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
