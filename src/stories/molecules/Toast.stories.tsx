@@ -42,13 +42,6 @@ const meta: Meta<ToastWithCustomArgs> = {
     duration: { control: { type: "number" } },
     action: { control: { type: "text" } },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
