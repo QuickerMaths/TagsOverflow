@@ -11,6 +11,7 @@ import { ComponentProps } from "react";
 
 type CustomArgs = {
   selectValuePlaceholder: string;
+  options: string[];
 };
 
 type SelectWithCustomArgs = ComponentProps<typeof Select> & CustomArgs;
@@ -20,15 +21,9 @@ const meta: Meta<SelectWithCustomArgs> = {
   tags: ["autodocs"],
   argTypes: {
     children: { table: { disable: true } },
+    options: { control: { type: "array" } },
     selectValuePlaceholder: { control: { type: "text" } },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
@@ -36,18 +31,20 @@ type Story = StoryObj<SelectWithCustomArgs>;
 
 export const Default: Story = {
   args: {
-    children: "Option 1",
     selectValuePlaceholder: "Placeholder...",
+    options: ["optionOne", "optionTwo", "optionThree"],
   },
-  render: ({ selectValuePlaceholder }) => (
+  render: ({ selectValuePlaceholder, options }) => (
     <Select>
-      <SelectTrigger>
+      <SelectTrigger aria-label={selectValuePlaceholder}>
         <SelectValue placeholder={selectValuePlaceholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={"optionOne"}>Option 1</SelectItem>
-        <SelectItem value={"optionTwo"}>Option 2</SelectItem>
-        <SelectItem value={"optionThree"}>Option 3</SelectItem>
+        {options.map((option) => (
+          <SelectItem key={option} value={option}>
+            {option}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   ),
