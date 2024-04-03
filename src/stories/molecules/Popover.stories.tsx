@@ -28,13 +28,6 @@ const meta: Meta<PopoverWithCustomArgs> = {
     },
     sideOffset: { control: { type: "range", min: 0, max: 20, step: 1 } },
   },
-  decorators: [
-    (Story) => (
-      <div className="flex justify-center items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
