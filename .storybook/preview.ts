@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "../src/css/globals.css";
 
+import { reactRouterParameters, withRouter } from "storybook-addon-remix-react-router";
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
 
 const preview: Preview = {
@@ -11,9 +12,14 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    reactRouter: reactRouterParameters({
+      routing: { path: '/', useStoryElement: true },
+    }),
   },
 
-  decorators: [withThemeByDataAttribute({
+  decorators: [
+    withRouter,
+    withThemeByDataAttribute({
     themes: {
       light: "light",
       dark: "dark",

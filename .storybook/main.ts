@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '@storybook/addon-a11y',
     "@storybook/addon-themes",
     "@storybook/addon-queryparmas",
+    "storybook-addon-remix-react-router",
   ],
   staticDirs: ['../public'],
   framework: {
