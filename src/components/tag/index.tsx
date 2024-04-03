@@ -1,4 +1,4 @@
-import { TagType } from '../tags-list'
+import { TagType } from '@/hoc/withQueryData'
 import Typography from '../typography'
 
 interface TagProps {
