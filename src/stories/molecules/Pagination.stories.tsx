@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from '@storybook/test'
+import { expect, userEvent, within } from '@storybook/test'
 
 import Pagination from "@/components/pagination";
 import { Button } from "@/components/ui/button";

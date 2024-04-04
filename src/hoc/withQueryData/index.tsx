@@ -1,4 +1,4 @@
-import { ComponentType, Suspense, useEffect, useState } from 'react';
+import { ComponentType, Suspense } from 'react';
 import { tagsQueryOptions } from "@/services/tagsLoader"
 import { useLoaderData } from "react-router"
 import { useSuspenseQuery } from '@tanstack/react-query';
