@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn, userEvent, within } from '@storybook/test'
 
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -56,8 +57,18 @@ export const Default: Story = {
     size: "default",
     children: "Button",
     disabled: false,
+    onClick: fn()
   },
   render: (args) => <Button {...args}>{args.children}</Button>,
+  play: async ({ canvasElement, args }) => {
+  const canvas = within(canvasElement)
+
+  const button = await canvas.findByRole('button')
+
+  await userEvent.click(button)
+
+  expect(args.onClick).toHaveBeenCalledOnce()
+  }
 };
 
 export const WithIcon: Story = {
@@ -66,6 +77,17 @@ export const WithIcon: Story = {
     size: "icon",
     icon: <IoSearchOutline />,
     disabled: false,
+    onClick: fn(),
+    onFocus: fn(),
   },
   render: (args) => <Button {...args} aria-label="button-with-icon">{args.icon}</Button>,
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement)
+  
+    const button = await canvas.findByRole('button')
+  
+    await userEvent.click(button)
+  
+    expect(args.onClick).toHaveBeenCalledOnce()
+  }
 };

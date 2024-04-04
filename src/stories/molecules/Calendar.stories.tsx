@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { userEvent, within } from '@storybook/test'
 
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
@@ -49,6 +50,13 @@ export const SingleMode: Story = {
         />
     );
   },
+  play: async ({ canvasElement }) => { 
+    const canvas = within(canvasElement);
+
+    const day = await canvas.findAllByRole("gridcell", { name: "1" });
+
+    await userEvent.click(day[5]);
+  }
 };
 
 export const MultipleMode: Story = {
@@ -76,6 +84,14 @@ export const MultipleMode: Story = {
       />
     );
   },
+  play: async ({ canvasElement }) => { 
+    const canvas = within(canvasElement);
+
+    const day = await canvas.findAllByRole("gridcell", { name: "1" });
+
+    await userEvent.click(day[5]);
+    await userEvent.click(day[10]);
+  }
 };
 
 export const RageMode: Story = {
@@ -102,4 +118,12 @@ export const RageMode: Story = {
       />
     );
   },
+  play: async ({ canvasElement }) => { 
+    const canvas = within(canvasElement);
+
+    const day = await canvas.findAllByRole("gridcell", { name: "1" });
+
+    await userEvent.click(day[5]);
+    await userEvent.click(day[10]);
+  }
 };

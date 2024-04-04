@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { expect, userEvent, within } from '@storybook/test'
 
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
@@ -39,8 +40,8 @@ export const Vertical: Story = {
             <>
                 <Label>{label}</Label>
                 <RadioGroup defaultValue="popular">
-                   {options.map((option) => (
-                    <div className="flex items-center space-x-2">
+                   {options.map((option, index) => (
+                    <div className="flex items-center space-x-2" key={index}>
                         <RadioGroupItem aria-label={option} value={option} id={option} />
                         <Label className='capitalize' htmlFor={option}>{option}</Label>
                     </div>
@@ -48,6 +49,22 @@ export const Vertical: Story = {
                 </RadioGroup>
             </>
         )
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement)
+
+        const radioGroup = canvas.getByRole('radiogroup')
+
+        const radioItems = canvas.getAllByRole('radio')
+
+        expect(radioGroup).toBeInTheDocument()
+        expect(radioItems).toHaveLength(3)
+
+        const radioItem = radioItems[1]
+
+        await userEvent.click(radioItem)
+
+        expect(radioItem).toBeChecked()
     }
 }
 
@@ -62,8 +79,8 @@ export const Horizontal: Story = {
             <>
                 <Label>{label}</Label>
                 <RadioGroup defaultValue="popular" className='flex gap-2'>
-                   {options.map((option) => (
-                        <div className="flex items-center space-x-2">
+                   {options.map((option, index) => (
+                        <div className="flex items-center space-x-2" key={index}>
                             <RadioGroupItem aria-label={option} value={option} id={option} />
                             <Label className='capitalize' htmlFor={option}>{option}</Label>
                         </div>
@@ -71,5 +88,21 @@ export const Horizontal: Story = {
                 </RadioGroup>
             </>
         )
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement)
+
+        const radioGroup = canvas.getByRole('radiogroup')
+
+        const radioItems = canvas.getAllByRole('radio')
+
+        expect(radioGroup).toBeInTheDocument()
+        expect(radioItems).toHaveLength(3)
+
+        const radioItem = radioItems[2]
+
+        await userEvent.click(radioItem)
+
+        expect(radioItem).toBeChecked()
     }
 }

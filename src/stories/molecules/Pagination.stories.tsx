@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { expect, fn, userEvent, within } from '@storybook/test'
 
 import Pagination from "@/components/pagination";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,23 @@ export const Default: Story = {
     has_more: true,
     total: 1000,
   },
-  render: (args) => <Pagination {...args} />
+  render: (args) => <Pagination {...args} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const nextButton = canvas.getByRole('button', { name: /next/i })
+
+    await userEvent.click(nextButton)
+    await userEvent.click(nextButton)
+    await userEvent.click(nextButton)
+
+    const previousButton = await canvas.findByRole('button', { name: /previous/i })
+
+    await userEvent.click(previousButton)
+
+    const activeButton = await canvas.findByRole('button', { name: /3/i })
+
+    expect(activeButton).toBeInTheDocument()
+  }
 };
 

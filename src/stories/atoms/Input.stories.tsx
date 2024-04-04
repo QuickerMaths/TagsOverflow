@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn, userEvent, within } from '@storybook/test'
 
 import { Input } from "@/components/ui/input";
 
@@ -25,6 +26,17 @@ export const Default: Story = {
     placeholder: "Input",
     disabled: false,
     type: "text",
+    onChange: fn(),
+    onFocus: fn(),
   },
   render: (args) => <Input {...args} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const input = canvas.getByRole("textbox");
+
+    await userEvent.type(input, "Hello, World!");
+
+    expect(input).toHaveValue("Hello, World!");
+  }
 };

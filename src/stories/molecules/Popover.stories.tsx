@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { expect, userEvent, within } from '@storybook/test'
 
 import {
   Popover,
@@ -48,6 +49,15 @@ export const Default: Story = {
       </PopoverContent>
     </Popover>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const trigger = canvas.getByText("Popover trigger")
+
+    await userEvent.click(trigger)
+
+    expect(trigger).toHaveAttribute("aria-expanded", "true")
+  }
 };
 
 export const WithButton: Story = {
@@ -67,4 +77,13 @@ export const WithButton: Story = {
       </PopoverContent>
     </Popover>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const trigger = canvas.getByText("Popover trigger")
+
+    await userEvent.click(trigger)
+
+    expect(trigger).toHaveAttribute("aria-expanded", "true")
+  }
 };

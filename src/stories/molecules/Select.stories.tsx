@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { expect, userEvent, within } from '@storybook/test'
 
 import {
   Select,
@@ -48,4 +49,13 @@ export const Default: Story = {
       </SelectContent>
     </Select>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const selectTrigger = canvas.getByRole('combobox')
+
+    await userEvent.click(selectTrigger)
+
+    expect(selectTrigger).toHaveAttribute("aria-expanded", "true")
+  }
 };
