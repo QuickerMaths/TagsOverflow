@@ -8,7 +8,6 @@ interface QueryErrorProps {
 }
 const QueryError = ({error, resetErrorBoundary}: QueryErrorProps) => {
   return (
-    <main>
         <Container className='py-20 flex-col-center gap-2'>
           <Typography variant='h2' tag='h1' className='flex items-end gap-2'>
             Ops! We have an
@@ -23,7 +22,6 @@ const QueryError = ({error, resetErrorBoundary}: QueryErrorProps) => {
           )}
           <Button onClick={resetErrorBoundary} variant="outline" className='mt-5'>Try again</Button>
         </Container>
-    </main>
   )
 }
 
